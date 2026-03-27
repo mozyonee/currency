@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Client
 
-## Getting Started
+Next.js 16 (React 19) frontend for Currency. Runs on port 3000.
 
-First, run the development server:
+## Commands
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm run dev          # next dev + tsc --watch in parallel
+npm run build        # production build
+npm run lint         # ESLint
+npm run format       # Prettier over src/**/*.{ts,tsx}
+npm run typecheck    # TypeScript check without emitting
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Variable | Description |
+|----------|-------------|
+| `NEXT_PUBLIC_SERVER_URL` | Base URL of the server API (default `http://localhost:3001`) |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Architecture
 
-## Learn More
+### Feature structure
 
-To learn more about Next.js, take a look at the following resources:
+The single feature is `features/converter/`. It owns its components and hook — nothing outside it needs to know how conversion works.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### API layer
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+A single Axios instance from `src/lib/api.ts` with `baseURL` from `NEXT_PUBLIC_SERVER_URL`. All server calls go through this instance.
 
-## Deploy on Vercel
+### Path alias
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+`@/*` maps to `src/*` (configured in `tsconfig.json`).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Next.js version note
+
+This project uses Next.js 16, which has breaking changes from prior versions. Before modifying any Next.js-specific code, check `node_modules/next/dist/docs/` for current APIs and conventions.
