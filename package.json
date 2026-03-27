@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "workspaces": [
+    "packages/*",
     "apps/*"
   ],
   "scripts": {
-    "format": "npm run dev --workspaces --if-present",
+    "format": "npm run format --workspaces --if-present",
     "tsc": "npm run typecheck --workspaces --if-present",
     "dev": "npm run dev --workspaces --if-present",
     "build": "npm run build --workspaces --if-present",

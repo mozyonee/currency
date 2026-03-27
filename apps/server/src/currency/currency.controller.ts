@@ -4,7 +4,7 @@ import { ConvertDto } from './convert.dto.js';
 
 @Controller()
 export class CurrencyController {
-	constructor(private readonly currencyService: CurrencyService) { }
+	constructor(private readonly currencyService: CurrencyService) {}
 
 	@Get('currencies')
 	getCurrencies(): Promise<string[]> {
@@ -12,7 +12,7 @@ export class CurrencyController {
 	}
 
 	@Post('convert')
-	async convert(@Body() body: ConvertDto): Promise<{ result: number; }> {
+	async convert(@Body() body: ConvertDto): Promise<{ result: number }> {
 		const { amount, from, to } = body;
 		const result = await this.currencyService.convert(amount, from, to);
 		return { result };

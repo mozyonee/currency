@@ -12,7 +12,9 @@ export default function CurrencySelect({ value, currencies, onChange }: Currency
 			className="border border-zinc-300 rounded px-3 py-2 dark:border-zinc-700 dark:bg-zinc-900"
 		>
 			{currencies.map((c) => (
-				<option key={c} value={c}>{c}</option>
+				<option key={c} value={c}>
+					{c}
+				</option>
 			))}
 		</select>
 	);

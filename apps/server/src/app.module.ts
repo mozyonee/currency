@@ -6,4 +6,4 @@ import { CurrencyModule } from './currency/currency.module.js';
 	controllers: [],
 	providers: [],
 })
-export class AppModule { }
+export class AppModule {}

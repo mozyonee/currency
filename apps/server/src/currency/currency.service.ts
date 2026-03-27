@@ -16,7 +16,6 @@ export class CurrencyService {
 	private cacheExpiresAt = 0;
 
 	private async getRates(): Promise<Record<string, number>> {
-
 		if (this.cachedRates && Date.now() < this.cacheExpiresAt) {
 			this.logger.debug('Using cached exchange rates');
 			return this.cachedRates;

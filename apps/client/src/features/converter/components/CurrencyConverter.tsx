@@ -5,13 +5,7 @@ import ConvertResult from './ConvertResult';
 import CurrencySelect from './CurrencySelect';
 
 export default function CurrencyConverter() {
-	const {
-		amount, from, to,
-		setAmount, setFrom, setTo,
-		loading,
-		convert,
-		currencies, result
-	} = useConverter();
+	const { amount, from, to, setAmount, setFrom, setTo, loading, convert, currencies, result } = useConverter();
 
 	return (
 		<div className="flex flex-col gap-4 w-full max-w-sm">
@@ -31,9 +25,7 @@ export default function CurrencyConverter() {
 			>
 				{loading ? 'Converting…' : 'Convert'}
 			</button>
-			{result !== null && (
-				<ConvertResult amount={amount} from={from} to={to} result={result} />
-			)}
+			{result !== null && <ConvertResult amount={amount} from={from} to={to} result={result} />}
 		</div>
 	);
 }

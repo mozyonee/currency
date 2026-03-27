@@ -13,8 +13,7 @@ export function useConverter() {
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		api
-			.get<string[]>('/currencies')
+		api.get<string[]>('/currencies')
 			.then(({ data }) => {
 				setCurrencies(data);
 				setFrom(data[0] ?? '');
@@ -40,7 +39,7 @@ export function useConverter() {
 
 		setLoading(true);
 		try {
-			const { data } = await api.post<{ result: number; }>('/convert', {
+			const { data } = await api.post<{ result: number }>('/convert', {
 				amount: parsed,
 				from,
 				to,
@@ -55,9 +54,14 @@ export function useConverter() {
 
 	return {
 		loading,
-		setAmount, setFrom, setTo,
-		amount, from, to,
+		setAmount,
+		setFrom,
+		setTo,
+		amount,
+		from,
+		to,
 		convert,
-		currencies, result,
+		currencies,
+		result,
 	};
 }
