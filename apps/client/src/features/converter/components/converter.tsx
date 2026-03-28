@@ -10,13 +10,7 @@ export default function Converter() {
 
 	return (
 		<div className="flex flex-col items-stretch gap-2">
-			<Input
-				label="Amount"
-				placeholder="Amount"
-				type="number"
-				value={amount.toString()}
-				onChange={setAmount}
-			/>
+			<Input label="Amount" placeholder="Amount" type="number" value={amount.toString()} onChange={setAmount} />
 
 			<Select label="From" value={from} options={currencies} onChange={setFrom} />
 			<Select label="To" value={to} options={currencies} onChange={setTo} />
@@ -25,9 +19,11 @@ export default function Converter() {
 				{loading ? 'Converting...' : 'Convert'}
 			</Button>
 
-			{result && <p className="text-lg font-medium">
-				{amount} {from} = {result.toFixed(4)} {to}
-			</p>}
+			{result && (
+				<p className="text-lg font-medium">
+					{amount} {from} = {result.toFixed(4)} {to}
+				</p>
+			)}
 		</div>
 	);
 }

@@ -7,7 +7,7 @@ interface Props {
 	style?: string;
 }
 
-export default function Button({ onClick, disabled, children, style = "", ...rest }: Props) {
+export default function Button({ onClick, disabled, children, style = '', ...rest }: Props) {
 	return (
 		<button
 			onClick={onClick}

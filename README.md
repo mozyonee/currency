@@ -12,10 +12,10 @@ Both apps use **tabs** for indentation, `tabWidth: 4`, and `printWidth: 120` (Pr
 ## Root Commands
 
 ```bash
-npm run dev -w apps/client   # start client in watch mode
-npm run dev -w apps/server   # start server in watch mode
-npm run build                # build all workspaces
-npm run tsc                  # type-check all workspaces
-npm run lint                 # lint all workspaces
-npm run test                 # run all tests
+npm run dev:client   # start client in watch mode
+npm run dev:server   # start server in watch mode
+npm run build        # build all workspaces
+npm run tsc          # type-check all workspaces
+npm run lint         # lint all workspaces
+npm run test         # run all tests
 ```

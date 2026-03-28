@@ -1,4 +1,4 @@
-import { SelectHTMLAttributes } from "react";
+import { SelectHTMLAttributes } from 'react';
 
 interface Props extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'onChange'> {
 	label?: string;
