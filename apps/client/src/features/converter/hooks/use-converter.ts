@@ -6,25 +6,24 @@ import toast from 'react-hot-toast';
 
 export function useConverter() {
 	const [currencies, setCurrencies] = useState<string[]>([]);
-	const [amount, setAmount] = useState<string>('');
-	const [from, setFrom] = useState<string>('');
-	const [to, setTo] = useState<string>('');
-	const [result, setResult] = useState<number | null>(null);
+	const [amount, setAmount] = useState<number>(0);
+	const [from, setFrom] = useState<string>();
+	const [to, setTo] = useState<string>();
+	const [result, setResult] = useState<number>();
 	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
-		api.get<string[]>('/currencies')
+		api.get('/currencies')
 			.then(({ data }) => {
 				setCurrencies(data);
-				setFrom(data[0] ?? '');
-				setTo(data[1] ?? '');
+				setFrom(data[0]);
+				setTo(data[1]);
 			})
 			.catch(() => toast.error('Failed to load currencies'));
 	}, []);
 
 	async function convert() {
-		const parsed = Number(amount);
-		if (!amount || isNaN(parsed) || parsed <= 0) {
+		if (!amount || amount <= 0) {
 			toast.error('Amount must be a positive number');
 			return;
 		}
@@ -39,8 +38,8 @@ export function useConverter() {
 
 		setLoading(true);
 		try {
-			const { data } = await api.post<{ result: number }>('/convert', {
-				amount: parsed,
+			const { data } = await api.post('/convert', {
+				amount,
 				from,
 				to,
 			});
@@ -54,7 +53,7 @@ export function useConverter() {
 
 	return {
 		loading,
-		setAmount,
+		setAmount: (value: string) => setAmount(Number(value)),
 		setFrom,
 		setTo,
 		amount,

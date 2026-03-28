@@ -1,9 +1,9 @@
-import CurrencyConverter from '@/features/converter/components/CurrencyConverter';
+import Converter from '@/features/converter/components/converter';
 
 export default function Home() {
 	return (
-		<div className="flex flex-1 items-center justify-center">
-			<CurrencyConverter />
-		</div>
+		<main className="m-auto w-full max-w-sm">
+			<Converter />
+		</main>
 	);
 }
