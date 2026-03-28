@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { CurrencyModule } from './currency/currency.module.js';
 
 @Module({
-	imports: [CurrencyModule],
+	imports: [ConfigModule.forRoot({ isGlobal: true, envFilePath: ['.env.local', '.env'] }), CurrencyModule],
 	controllers: [],
 	providers: [],
 })
