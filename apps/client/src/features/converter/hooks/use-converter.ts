@@ -22,6 +22,7 @@ export function useConverter() {
 
 	useEffect(() => {
 		if (amount === 0) { setResult(0); return; }
+		if (from === to) { setResult(amount); return; }
 		if (amount < 0 || !from || !to || from === to) return;
 		setResult(undefined);
 
@@ -41,7 +42,12 @@ export function useConverter() {
 	}, []);
 
 	return {
-		setAmount: (value: string) => setAmount(Math.abs(Number(value)) || 0),
+		setAmount: (value: string) => {
+			if (value.endsWith('.')) return;
+
+			const result = Math.abs(Number(value));
+			setAmount(parseFloat(result.toFixed(2)) || 0);
+		},
 		setFrom,
 		setTo,
 		amount,

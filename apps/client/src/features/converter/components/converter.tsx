@@ -16,7 +16,7 @@ export default function Converter() {
 
 			<p className="text-lg font-medium">
 				{typeof result === 'number'
-					? `${amount} ${from} = ${result.toFixed(2)} ${to}`
+					? `${amount} ${from} = ${parseFloat(result.toFixed(2))} ${to}`
 					: 'Converting...'}
 			</p>
 		</div>
