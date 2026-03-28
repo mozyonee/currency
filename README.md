@@ -1,4 +1,4 @@
-# Currency
+# Currency converter
 
 Currency converter web app. npm workspaces monorepo.
 
