@@ -15,7 +15,9 @@ export default function Converter() {
 			<Select label="To" value={to} options={currencies} onChange={setTo} />
 
 			<p className="text-lg font-medium">
-				{result === undefined ? 'Converting...' : `${amount} ${from} = ${result.toFixed(2)} ${to}`}
+				{typeof result === 'number'
+					? `${amount} ${from} = ${result.toFixed(2)} ${to}`
+					: 'Converting...'}
 			</p>
 		</div>
 	);
