@@ -17,15 +17,12 @@ export class CurrencyService {
 
 	private async getRates(): Promise<Record<string, number>> {
 		if (this.cachedRates && Date.now() < this.cacheExpiresAt) {
-			this.logger.debug('Using cached exchange rates');
 			return this.cachedRates;
 		}
 
 		const { data } = await axios.get<RatesResponse>(RATES_URL);
 		this.cachedRates = data.rates;
 		this.cacheExpiresAt = Date.now() + CACHE_TTL_MS;
-
-		this.logger.debug('Fetched new exchange rates');
 
 		return this.cachedRates;
 	}
