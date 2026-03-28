@@ -1,6 +1,6 @@
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module.js';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
 	const logger = new Logger('Bootstrap');
@@ -11,11 +11,8 @@ async function bootstrap() {
 
 	const port = process.env.PORT ?? 3001;
 	await app.listen(port, '0.0.0.0', () => {
-		logger.log(`Listening on ${port}`);
+		logger.log(`Listening on port ${port}`);
 	});
 }
 
-bootstrap().catch((err) => {
-	console.error('Bootstrap failed:', err);
-	process.exit(1);
-});
+void bootstrap();
