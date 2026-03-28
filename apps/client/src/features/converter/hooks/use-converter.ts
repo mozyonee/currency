@@ -1,16 +1,34 @@
 'use client';
 
 import api from '@/lib/api';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 
 export function useConverter() {
 	const [currencies, setCurrencies] = useState<string[]>([]);
-	const [amount, setAmount] = useState<number>(0);
+	const [amount, setAmount] = useState<number>(1);
 	const [from, setFrom] = useState<string>();
 	const [to, setTo] = useState<string>();
 	const [result, setResult] = useState<number>();
-	const [loading, setLoading] = useState(false);
+
+	const convert = useCallback(async () => {
+		try {
+			const { data } = await api.post('/convert', { amount, from, to });
+			setResult(data);
+		} catch {
+			toast.error('Conversion failed. Please try again.');
+		} finally { }
+	}, [amount, from, to]);
+
+	useEffect(() => {
+		if (amount === 0) { setResult(0); return; }
+		if (amount < 0 || !from || !to || from === to) return;
+		setResult(undefined);
+
+		// Debounce conversion to avoid excessive API calls
+		const timer = setTimeout(convert, 500);
+		return () => clearTimeout(timer);
+	}, [amount, from, to, convert]);
 
 	useEffect(() => {
 		api.get('/currencies')
@@ -22,44 +40,13 @@ export function useConverter() {
 			.catch(() => toast.error('Failed to load currencies'));
 	}, []);
 
-	async function convert() {
-		if (!amount || amount <= 0) {
-			toast.error('Amount must be a positive number');
-			return;
-		}
-		if (!from || !to) {
-			toast.error('Please select both currencies');
-			return;
-		}
-		if (from === to) {
-			toast.error('Source and target currencies must differ');
-			return;
-		}
-
-		setLoading(true);
-		try {
-			const { data } = await api.post('/convert', {
-				amount,
-				from,
-				to,
-			});
-			setResult(data.result);
-		} catch {
-			toast.error('Conversion failed. Please try again.');
-		} finally {
-			setLoading(false);
-		}
-	}
-
 	return {
-		loading,
-		setAmount: (value: string) => setAmount(Number(value)),
+		setAmount: (value: string) => setAmount(Math.abs(Number(value)) || 0),
 		setFrom,
 		setTo,
 		amount,
 		from,
 		to,
-		convert,
 		currencies,
 		result,
 	};

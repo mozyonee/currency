@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 
 const RATES_URL = 'https://open.er-api.com/v6/latest/USD';
@@ -10,12 +10,10 @@ interface RatesResponse {
 
 @Injectable()
 export class CurrencyService {
-	private readonly logger = new Logger(CurrencyService.name);
-
 	private cachedRates: Record<string, number> | null = null;
 	private cacheExpiresAt = 0;
 
-	private async getRates(): Promise<Record<string, number>> {
+	private async getRates() {
 		if (this.cachedRates && Date.now() < this.cacheExpiresAt) {
 			return this.cachedRates;
 		}
@@ -27,12 +25,12 @@ export class CurrencyService {
 		return this.cachedRates;
 	}
 
-	async getCurrencies(): Promise<string[]> {
+	async getCurrencies() {
 		const rates = await this.getRates();
 		return Object.keys(rates);
 	}
 
-	async convert(amount: number, from: string, to: string): Promise<number> {
+	async convert(amount: number, from: string, to: string) {
 		const rates = await this.getRates();
 		const inUsd = amount / rates[from];
 		return inUsd * rates[to];
